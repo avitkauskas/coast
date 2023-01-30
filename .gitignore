@@ -8,8 +8,11 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+.clj-kondo/
+.lsp/
 .idea/
 *.iml
+*.swp
 .env
 .cpcache
 ubuntu-*console.log
