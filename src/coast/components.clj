@@ -31,13 +31,14 @@
   (coast/css \"bundle.css\")
 
   ; assuming the assets.edn looks something like this
-  {\"bundle.css\" [\"style.css\"]}
+  {\"bundle.css\" [\"style.css\" \"https://edn.framework.com\"]}
   ```
 
   The code above outputs:
 
   ```html
-  <link rel=\"stylesheet\" href=\"/style.css\" />
+  <link rel=\"stylesheet\" href=\"/css/style.css\" />
+  <link rel=\"stylesheet\" href=\"https://edn.framework.com\" />
   ```
   "
   ([req bundle opts]

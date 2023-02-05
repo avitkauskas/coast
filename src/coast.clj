@@ -1,6 +1,5 @@
 (ns coast
   (:require [coast.potemkin.namespaces :as namespaces]
-            [hiccup2.core]
             [coast.db]
             [coast.db.connection]
             [coast.theta]
@@ -31,6 +30,7 @@
 
   [coast.db
    q
+   defq
    pull
    transact
    delete
@@ -94,8 +94,4 @@
    now
    datetime
    instant
-   strftime]
-
-  [hiccup2.core
-   raw
-   html])
+   strftime])

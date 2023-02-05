@@ -3,6 +3,7 @@
             [clojure.java.io :as io]
             [clojure.edn :as edn]
             [clojure.pprint :as pprint]
+            [clojure.string :as string]
             [coast.utils :as utils])
   (:import (java.security MessageDigest)
            (java.io File)))
@@ -16,8 +17,12 @@
   (when (string? s)
     (second (re-find #"\.(.*)$" s))))
 
-(defn hrefs [k v]
-  (mapv #(str "/" k "/" %) v))
+(defn hrefs [prefix references]
+  (mapv (fn [reference]
+          (if (string/starts-with? reference "http")
+            reference
+            (str "/" prefix "/" reference)))
+        references))
 
 (defn paths [k v]
   (mapv #(str "resources/public/" k "/" %) v))

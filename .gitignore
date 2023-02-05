@@ -15,4 +15,5 @@ pom.xml.asc
 *.swp
 .env
 .cpcache
+.DS_Store
 ubuntu-*console.log
