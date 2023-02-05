@@ -73,8 +73,9 @@
       "edn" {:sql (migrations.edn/migrate contents)
              :raw contents
              :filename filename}
-      (let [f (load-file filename-with-path)
-            output (f)]
+      (let [f (load-file filename-with-path) ;; the last var defined
+            {:syms [up change]} (-> f meta :ns .getName ns-publics)
+            output ((or up change (constantly nil)))]
         {:sql (string/join "" output)
          :vec output
          :filename filename}))))
@@ -115,7 +116,15 @@
              :raw contents
              :filename filename}
       (let [f (load-file filename-with-path)
-            output (f)]
+            ;; Figure out what the migration's given us...
+            {:syms [down change]} (-> f meta :ns .getName ns-publics)
+            output (cond
+                     down   (do
+                              (reset! coast.db.migrations/rollback? false) ;; don't auto-undo anything,
+                              (down)             ;; because we're gonna run 'down' exactly as provided;
+                              (reset! coast.db.migrations/rollback? true)) ;; and then put it back.
+                     change (change)
+                     :else  nil)]
         {:sql (string/join "" output)
          :vec output
          :filename filename}))))
